@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #013a04;
+}
+h1 {
+    color: #ffffff;
+    text-align: center;
+    padding: 10%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 100px;
+    font-weight: 900;
+}
+p {
+    color: #ffffff;
+    text-align: center;
+    font-size: 24px;
+    margin: 0 20px 20px 20px;
+}
+ul {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 23%;
+    justify-content: center;
+    gap: 30px;
+    list-style-type: none;
+     font-size: 28px ;
+     font-weight: 600;
+        background-color: #062e08;
+        border-radius: 30px;
+        border: 20px solid #013a04;
+       padding: 20px;
+}
+a {
+    text-decoration: none;
+    color: #bfe9b6;
+}
+a:visited {
+    color: #beeece;
+}
+a:hover {
+    color: #36663c;
+}
+#Inicio {
+    text-align: justify;
+    margin: 0 200px 20px 200px;
+}
+.H, .R, .C {
+    text-align: justify;
+    margin: 0 200px 20px 200px;
+}

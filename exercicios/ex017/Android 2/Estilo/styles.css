@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+body { 
+    font: 20px "Inter", sans-serif;
+    background-color: rgb(0, 49, 0);
+    color: white;
+}
+nav > ul{
+    margin-bottom: 0px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 20px;
+    margin: 40px;
+    background-color: rgb(4, 49, 4);
+    border-radius: 15px;
+    width: 40%;
+    left: 23%;
+    top: 0;
+    border: 2px solid rgb(47, 80, 54);
+    box-shadow: 20px 20px 50px rgb(1, 31, 5);
+     box-shadow: 10px 0.5px 20px rgb(59, 90, 63);
+    left: 10%;
+}
+
+nav > ul > li > a{
+    text-decoration: none;
+    color: rgb(153, 216, 167);
+    font:  bold 30px "Inter", sans-serif;
+}
+nav > ul > li > a:hover{
+    color: rgb(62, 110, 86);
+    transition: 0.5s;
+}
+.logo {
+    display: flex;
+    position: relative;
+    top: 80px;
+    align-items: center;
+    justify-content: flex-start;
+     margin-left: 30px;
+     padding: 0;
+   margin-bottom: 0px;
+
+}
+
+
+
+.intro > h1 {
+    text-align: center;
+    margin-top: 150px;
+   font: 900 130px "Inter", sans-serif;
+    color: rgb(255, 255, 255);
+
+}
+.intro > p {
+    text-align: center;
+    font:  700 30px "Inter", sans-serif;
+    margin: 20px 200px 0px 200px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 300px;
+}
+.recursos > h2 {
+    margin: 100px 110px 0px 100px;
+    font: 900 40px "Inter", sans-serif;
+    text-align: left;
+    margin-bottom: 80px;
+}
+.recursos > ul {
+    margin: 100px 110px 0px 100px;
+    font:  400 30px "Inter", sans-serif;
+    color: rgb(255, 255, 255);
+}
+.noticias > h2 {
+    margin: 100px 110px 0px 100px;
+    font: 900 70px "Inter", sans-serif;
+    text-align: left;
+    margin-bottom: 80px;
+}
+.noticias > article > h3 {
+    margin: 0px 110px 0px 100px;
+    font: 700 40px "Inter", sans-serif;
+    color: rgb(255, 255, 255);
+}
+.noticias > article > p {
+    margin: 0px 110px 0px 100px;
+    font: 400 20px "Inter", sans-serif;
+    color: rgb(255, 255, 255);
+    margin-bottom: 50px;
+}
+.noticias > article > h4 {
+    margin: 0px 110px 0px 100px;
+    font: 700 30px "Inter", sans-serif;
+    color: rgb(255, 255, 255);
+}
+.videos > h2 {
+    margin: 100px 110px 0px 100px;
+    font: 900 70px "Inter", sans-serif;
+    text-align: left;
+    margin-bottom: 80px;
+}
+video {
+  display: block;
+  margin: 0 auto;
+  top: 0;
+  left: 0;
+  width: 60vw;
+  height: 90vh;
+  object-fit: cover;
+  z-index: 999;
+
+    margin: 0px 110px 100px 100px;
+    border: 5px solid rgb(47, 80, 54);
+    box-shadow: 10px 10px 30px rgb(1, 31, 5);
+}
+footer {
+    background-color: rgb(4, 49, 4);
+    text-align: center;
+    padding: 30px;
+    color: white;
+    margin: 0px;
+    font:  400 20px "Inter", sans-serif;
+    box-shadow: 0px -5px 20px rgb(1, 31, 5);
+}
+footer p {
+    margin: 0;
+}

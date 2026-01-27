@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Financeiro Profissional</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #0f172a;
+      --secondary: #2563eb;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #020617;
+    }
+
+    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+    body { margin: 0; background: var(--bg); color: var(--text); }
+
+    header {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white; padding: 20px; text-align: center;
+    }
+
+    main { padding: 20px; max-width: 1300px; margin: auto; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+
+    .card {
+      background: var(--card); border-radius: 14px; padding: 20px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    }
+
+    input, select, button {
+      padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1;
+    }
+
+    button { background: var(--secondary); color: white; font-weight: bold; cursor: pointer; border: none; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 8px; border-bottom: 1px solid #e5e7eb; }
+
+    .lucro { color: green; font-weight: bold; }
+    .despesa { color: red; font-weight: bold; }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Dashboard Financeiro Profissional</h1>
+  <p>Controle por período, centros de custo e exportação</p>
+</header>
+
+<main>
+
+  <section class="grid">
+    <div class="card"><canvas id="lineChart"></canvas></div>
+    <div class="card"><canvas id="pieChart"></canvas></div>
+  </section>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Filtros</h3>
+      <select id="filterYear"></select>
+      <select id="filterMonth">
+        <option value="">Todos os meses</option>
+        <option value="01">Janeiro</option><option value="02">Fevereiro</option>
+        <option value="03">Março</option><option value="04">Abril</option>
+        <option value="05">Maio</option><option value="06">Junho</option>
+        <option value="07">Julho</option><option value="08">Agosto</option>
+        <option value="09">Setembro</option><option value="10">Outubro</option>
+        <option value="11">Novembro</option><option value="12">Dezembro</option>
+      </select>
+      <button onclick="applyFilter()">Aplicar</button>
+    </div>
+
+    <div class="card">
+      <h3>Exportar Dados</h3>
+      <button onclick="exportExcel()">Exportar Excel</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Novo Lançamento</h3>
+    <form id="financeForm">
+      <input type="date" id="date" required />
+      <input type="text" id="description" placeholder="Descrição" required />
+      <select id="center">
+        <option value="Administrativo">Administrativo</option>
+        <option value="Obra A">Obra A</option>
+        <option value="Obra B">Obra B</option>
+      </select>
+      <select id="type"><option value="lucro">Lucro</option><option value="despesa">Despesa</option></select>
+      <input type="number" id="value" placeholder="Valor" required />
+      <button type="submit">Salvar</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <table id="financeTable">
+      <thead><tr><th>Data</th><th>Descrição</th><th>Centro</th><th>Tipo</th><th>Valor</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+  let financeData = JSON.parse(localStorage.getItem('financeData')) || [];
+
+  const lineChart = new Chart(document.getElementById('lineChart'), {
+    type: 'line', data: { labels: [], datasets: [{ label: 'Lucros', data: [] }, { label: 'Despesas', data: [] }] }
+  });
+
+  const pieChart = new Chart(document.getElementById('pieChart'), {
+    type: 'pie', data: { labels: ['Lucros', 'Despesas'], datasets: [{ data: [0,0] }] }
+  });
+
+  function renderTable(data){
+    const tbody = document.querySelector('#financeTable tbody');
+    tbody.innerHTML='';
+    data.forEach(i=>{
+      tbody.innerHTML += `<tr><td>${i.date}</td><td>${i.description}</td><td>${i.center}</td><td class="${i.type}">${i.type}</td><td>R$ ${i.value.toFixed(2)}</td></tr>`;
+    });
+  }
+
+  function updateCharts(data){
+    const monthly={}; let l=0,d=0;
+    data.forEach(i=>{
+      const m=i.date.slice(0,7);
+      if(!monthly[m]) monthly[m]={lucro:0,despesa:0};
+      monthly[m][i.type]+=i.value;
+      i.type==='lucro'?l+=i.value:d+=i.value;
+    });
+    lineChart.data.labels=Object.keys(monthly);
+    lineChart.data.datasets[0].data=Object.values(monthly).map(m=>m.lucro);
+    lineChart.data.datasets[1].data=Object.values(monthly).map(m=>m.despesa);
+    pieChart.data.datasets[0].data=[l,d];
+    lineChart.update(); pieChart.update();
+  }
+
+  function applyFilter(){
+    const y=document.getElementById('filterYear').value;
+    const m=document.getElementById('filterMonth').value;
+    const f=financeData.filter(i=>{
+      return (!y||i.date.startsWith(y)) && (!m||i.date.slice(5,7)===m);
+    });
+    renderTable(f); updateCharts(f);
+  }
+
+  function exportExcel(){
+    const ws=XLSX.utils.json_to_sheet(financeData);
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,'Financeiro');
+    XLSX.writeFile(wb,'financeiro.xlsx');
+  }
+
+  document.getElementById('financeForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const item={
+      date:date.value, description:description.value, center:center.value,
+      type:type.value, value:Number(value.value)
+    };
+    financeData.push(item);
+    localStorage.setItem('financeData',JSON.stringify(financeData));
+    load(); e.target.reset();
+  });
+
+  function load(){
+    const years=[...new Set(financeData.map(i=>i.date.slice(0,4)))];
+    filterYear.innerHTML='<option value="">Todos os anos</option>';
+    years.forEach(y=>filterYear.innerHTML+=`<option>${y}</option>`);
+    renderTable(financeData); updateCharts(financeData);
+  }
+
+  load();
+</script>
+
+</body>
+</html>
