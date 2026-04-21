@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Sua Loja de Tecnologia</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🛍️ TechStore</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#produtos">Produtos</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="carrinho-icon">
+                <button id="btn-carrinho" class="btn-carrinho">
+                    🛒 Carrinho (<span id="contador-carrinho">0</span>)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner Principal -->
+    <section class="banner" id="home">
+        <div class="container">
+            <div class="banner-content">
+                <h2>Bem-vindo à TechStore</h2>
+                <p>Encontre os melhores produtos de tecnologia com preços incríveis!</p>
+                <button class="btn-primario" onclick="document.getElementById('produtos').scrollIntoView()">
+                    Confira Nossos Produtos
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Produtos -->
+    <section class="produtos" id="produtos">
+        <div class="container">
+            <h2>Nossos Produtos</h2>
+            <div class="filtros">
+                <button class="filtro-btn ativo" data-filtro="todos">Todos</button>
+                <button class="filtro-btn" data-filtro="fones">Fones</button>
+                <button class="filtro-btn" data-filtro="teclados">Teclados</button>
+                <button class="filtro-btn" data-filtro="mouses">Mouses</button>
+                <button class="filtro-btn" data-filtro="monitores">Monitores</button>
+            </div>
+            <div class="grid-produtos" id="grid-produtos">
+                <!-- Produtos serão inseridos aqui pelo JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal do Carrinho -->
+    <div id="modal-carrinho" class="modal">
+        <div class="modal-content">
+            <span class="fechar">&times;</span>
+            <h2>Seu Carrinho</h2>
+            <div id="carrinho-itens" class="carrinho-itens">
+                <!-- Itens do carrinho aparecem aqui -->
+            </div>
+            <div class="carrinho-resumo">
+                <hr>
+                <div class="total">
+                    <strong>Total:</strong>
+                    <strong id="total-carrinho">R$ 0,00</strong>
+                </div>
+            </div>
+            <div class="botoes-carrinho">
+                <button class="btn-secundario" id="btn-limpar-carrinho">Limpar Carrinho</button>
+                <button class="btn-primario" id="btn-finalizar">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Contato -->
+    <section class="contato" id="contato">
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <div class="contato-grid">
+                <div class="contato-item">
+                    <h3>📧 Email</h3>
+                    <p>contato@techstore.com</p>
+                </div>
+                <div class="contato-item">
+                    <h3>📱 Telefone</h3>
+                    <p>(11) 9999-9999</p>
+                </div>
+                <div class="contato-item">
+                    <h3>📍 Endereço</h3>
+                    <p>Rua da Tecnologia, 123 - São Paulo, SP</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 TechStore. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
